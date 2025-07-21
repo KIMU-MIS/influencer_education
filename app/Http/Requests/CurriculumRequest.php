@@ -24,9 +24,9 @@ class CurriculumRequest extends FormRequest
      * @return array<string, mixed>
      */
 
- // バリデーションルール   
-public function rules()
-{  
+   // バリデーションルール   
+   public function rules(): array{  
+
         return [
             'title' => 'required|string|max:255',
             'grade_id' => 'required|integer|exists:grades,id',
@@ -40,9 +40,9 @@ public function rules()
    
 
 
-// バリデーションメッセージ
-public function messages()
-{
+  // バリデーションメッセージ
+  public function messages(): array{
+    
     return [
         'title.required'      => '授業名は入力必須です。',
         'video_url.required'  => '動画URLは入力必須です。',

@@ -37,6 +37,39 @@ class Curriculum extends Model
     {
     return $this->belongsTo(Grade::class);
     }
+
+    // 授業登録処理
+    public static function createFromRequest($request, $thumbnailPath = null)
+   {
+    return self::create([
+        'title' => $request->title,
+        'grade_id' => $request->grade_id,
+        'video_url' => $request->video_url,
+        'description' => $request->description,
+        'alway_delivery_flg' => $request->boolean('alway_delivery_flg'),
+        'thumbnail' => $thumbnailPath,
+    ]);
+    }
+ 
+    // 授業更新処理
+    public function updateFromRequest($request, $thumbnailPath = null){
+
+    // 既存のカリキュラムを更新
+    $this->title = $request->title;
+    $this->grade_id = $request->grade_id;
+    $this->video_url = $request->video_url;
+    $this->description = $request->description;
+    $this->alway_delivery_flg = $request->boolean('alway_delivery_flg');
+
+    // サムネイル画像があれば更新
+    if ($thumbnailPath !== null) {
+        $this->thumbnail = $thumbnailPath;
+    }
+
+    $this->save();
+
+    return $this;
+   }
 }
 
 
