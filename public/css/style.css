@@ -51,9 +51,14 @@ body {
     width: 100%;
 }
 
-
+.btn-back2{
+  display:inline-block;
+  margin:12px 0 0 16px; /* ヘッダーの下・左端に配置 */
+  font-size:14px;       /* 小さめにするなら */
+}
 /* 戻るリンク */
 .btn-back {
+    
     font-size: 18px;
     color: #007bff;
     text-decoration: underline;
@@ -104,12 +109,13 @@ body {
 
 /* ファイル選択入力欄 */
 .profile-image-input-group input[type="file"] {
-    font-size: 16px;
-    cursor: pointer;
-    border: 1px solid #999;
-    border-radius: 6px;
-    padding: 6px 8px;
-    margin-top: 4px;
+  cursor: pointer;
+  font-size: 12px;         /* 全体を小さめに */
+  border: 1px solid #999;
+  border-radius: 6px;
+  padding: 6px 8px;        /* ← これだけでOK（重複を削除） */
+  margin-top: 4px;
+  box-sizing: border-box;
 }
 
 /* 入力フォームの行を横並びに */

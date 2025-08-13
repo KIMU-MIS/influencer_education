@@ -8,25 +8,20 @@ class Article extends Model
 {
     protected $fillable = ['published_date', 'title', 'content'];
 
-    /**
-     * お知らせの新規登録
-     */
+    protected $casts = [
+        'published_date' => 'date', // Blade の ->format() 用
+    ];
+
     public static function createArticle(array $data)
     {
         return self::create($data);
     }
 
-    /**
-     * お知らせの更新
-     */
     public function updateArticle(array $data)
     {
         return $this->update($data);
     }
 
-    /**
-     * お知らせの削除
-     */
     public function deleteArticle()
     {
         return $this->delete();

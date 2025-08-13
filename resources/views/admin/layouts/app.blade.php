@@ -10,16 +10,24 @@
     <header class="admin-header5">
         <nav class="admin-nav5">
             <ul>
-                <li><a href="{{ route('admin.curriculum.index') }}">授業管理</a></li>
-                <li><a href="{{ route('admin.article.index') }}">お知らせ管理</a></li>
-                <li><a href="{{ route('admin.banner.edit') }}">バナー管理</a></li>
+                @if (Route::has('admin.curriculum.index'))
+                  <li><a href="{{ route('admin.curriculum.index') }}">授業管理</a></li>
+                @endif
+                @if (Route::has('admin.article.index'))
+                  <li><a href="{{ route('admin.article.index') }}">お知らせ管理</a></li>
+                @endif
+                @if (Route::has('admin.banner.edit'))
+                  <li><a href="{{ route('admin.banner.edit') }}">バナー管理</a></li>
+                @endif
             </ul>
+            @if (Route::has('logout'))
             <div class="logout">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="logout-button">ログアウト</button>
                 </form>
             </div>
+            @endif
         </nav>
     </header>
 

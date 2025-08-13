@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\User\ProgressController;
 use App\Http\Controllers\User\CurriculumController;
 use App\Http\Controllers\User\ProfileController;
-
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\User\ArticleController as UserArticleController;
 
@@ -17,9 +16,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/article/list',   [ArticleController::class, 'index'])->name('article.index');
     Route::get('/article/create', [ArticleController::class, 'create'])->name('article.create');
     Route::post('/article/store', [ArticleController::class, 'store'])->name('article.store');
-    Route::get('/article/edit/{id}', [ArticleController::class, 'edit'])->name('article.edit');
-    Route::put('/article/update/{id}', [ArticleController::class, 'update'])->name('article.update');
-    Route::delete('/article/delete/{id}', [ArticleController::class, 'destroy'])->name('article.destroy');
+    Route::get('/article/edit/{id}', [ArticleController::class, 'edit'])->whereNumber('id')->name('article.edit');
+    Route::put('/article/update/{id}', [ArticleController::class, 'update'])->whereNumber('id')->name('article.update');
+    Route::delete('/article/delete/{id}', [ArticleController::class, 'destroy'])->whereNumber('id')->name('article.destroy');
 });
 
 // ----------------------
@@ -39,4 +38,9 @@ Route::get('/articles/{id}', [UserArticleController::class, 'show'])
     ->whereNumber('id')
     ->name('user.articles.show');
 
-    
+// --- 仮ログアウト（Auth未実装のためのダミー） ---
+Route::post('/logout', function (Request $request) {
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect()->route('progress');
+})->name('logout');
