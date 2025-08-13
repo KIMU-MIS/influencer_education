@@ -406,25 +406,51 @@ input[type="email"] {
 
 /* 授業リスト */
 .curriculum-list3 {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.curriculum-list3 li{
+  display: flex;
+  align-items: center;      /* 縦中央 */
+  justify-content: center;  /* 行全体をカード中央へ */
+  gap: 0;                   /* ← ここを 0（または 1px, 2px）に */
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 
-.curriculum-list3 li {
-    margin-bottom: 8px;
-    font-size: 14px;
+
+.completed-badge{
+  display:inline-block;
+  width:auto;           /* ← ここを auto に */
+  margin-left: 10px;    /* もっと詰めたければ 1px/0 に */
+  color:#e60033;
+  font-weight:700;
+  font-size:14px;       /* さらに詰めたいなら 13px も可 */
+  text-align:left;
+}
+/* 未受講時は見えないが幅は確保 */
+.completed-badge.is-hidden {
+  visibility: hidden;      /* display:none はNG */
 }
 
-/* 受講済バッジ */
+/* タイトル側 */
+.curriculum-title {
+  margin-left: -32px; 
+  flex: 8 auto;
+}
+
+/* 旧スタイル（背景赤のバッジ）を使わないなら削除してOK */
 .completed {
-    background-color: red;
-    color: white;
-    font-size: 12px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    margin-right: 5px;
+  /* 不要なら削除。使うならこのまま残して別用途に */
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-right: 5px;
 }
+
 /* お知らせ変更画面用 */
 .container4 {
     max-width: 600px;
