@@ -6,10 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreArticleRequest extends FormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
+    public function authorize(): bool { return true; }
 
     public function rules(): array
     {
@@ -19,6 +16,8 @@ class StoreArticleRequest extends FormRequest
             'content'        => 'required|string',
         ];
     }
+
+    // 日本語ラベル（任意）
     public function attributes(): array
     {
         return [
