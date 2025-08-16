@@ -1,30 +1,27 @@
 <?php
+
 namespace App\Http\Controllers\User;
+
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\Grade;
+use App\Models\User;
 
 class ProgressController extends Controller
 {
     public function index()
     {
-
-        $user = User::find(1);
-        if (!$user) {
+        // 課題用の仮ユーザーでもOK。auth()が使えるならそちらを優先
+        $user = auth()->user() ?? User::find(1);
+        if (! $user) {
             abort(404);
         }
 
-        $grades = Grade::with([
-            'curriculums' => function ($q) use ($user) {
-                $q->with(['progresses' => function ($q2) use ($user) {
-                    $q2->where('users_id', $user->id);
-                }]);
-            },
-        ])->get();
+        // ★ここだけをモデルスコープに置き換え（レビュー対応 ＆ N+1回避）
+        $grades = Grade::withCurriculumsAndProgressForUser($user)->get();
 
+        // 以降は元の流れのまま
         $currentGrade = $user->grade;
 
-        // 既存Blade互換：学年ごとのカリキュラム配列
         $curriculumsByGrade = [];
         foreach ($grades as $g) {
             $curriculumsByGrade[$g->id] = $g->curriculums;

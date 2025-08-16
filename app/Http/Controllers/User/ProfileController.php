@@ -3,48 +3,36 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\User\Profile\UpdateProfileRequest;
+use App\Http\Requests\User\Profile\UpdatePasswordRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    // プロフィール編集画面表示（仮ユーザー取得）
+    // プロフィール編集画面表示（仮ユーザー取得のまま）
     public function index()
     {
         $user = User::find(1);
-        if (!$user) {
+        if (! $user) {
             abort(404);
         }
         return view('user.profile.edit', compact('user'));
     }
 
-    // プロフィール更新処理
-    public function update(Request $request)
+    // プロフィール更新処理（FormRequest + モデルメソッド + トランザクション）
+    public function update(UpdateProfileRequest $request)
     {
         $user = User::find(1);
-        if (!$user) {
+        if (! $user) {
             abort(404);
         }
 
-        $request->validate([
-            'name'         => 'required|string|max:255',
-            'name_kana'    => 'required|string|max:255',
-            'email'        => 'required|email|max:255',
-            'profile_image'=> 'nullable|image|max:2048',
-        ]);
-
-        $user->name      = $request->input('name');
-        $user->name_kana = $request->input('name_kana');
-        $user->email     = $request->input('email');
-
-        if ($request->hasFile('profile_image')) {
-            $path = $request->file('profile_image')->store('images', 'public');
-            $user->profile_image = basename($path);
-        }
-
-        $user->save();
+        DB::transaction(function () use ($user, $request) {
+            // Userモデルに実装した updateProfile() を利用
+            $user->updateProfile($request->validated(), $request->file('profile_image'));
+        });
 
         return redirect()->route('profile')->with('success', 'プロフィールを更新しました。');
     }
@@ -55,25 +43,23 @@ class ProfileController extends Controller
         return view('user.profile.password_edit');
     }
 
-    // パスワード更新処理
-    public function updatePassword(Request $request)
+    // パスワード更新処理（FormRequest + モデルメソッド + トランザクション）
+    public function updatePassword(UpdatePasswordRequest $request)
     {
-        $request->validate([
-            'current_password'      => 'required',
-            'new_password'          => 'required|string|min:8|confirmed',
-        ]);
-
         $user = User::find(1);
-        if (!$user) {
+        if (! $user) {
             abort(404);
         }
 
-        if (!Hash::check($request->current_password, $user->password)) {
+        // 現在パスワード確認
+        if (! Hash::check($request->current_password, $user->password)) {
             return back()->withErrors(['current_password' => '現在のパスワードが正しくありません']);
         }
 
-        $user->password = Hash::make($request->new_password);
-        $user->save();
+        DB::transaction(function () use ($user, $request) {
+            // Userモデルに実装した changePassword() を利用
+            $user->changePassword($request->new_password);
+        });
 
         return redirect()->route('profile')->with('success', 'パスワードを変更しました。');
     }
