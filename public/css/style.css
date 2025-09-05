@@ -1,0 +1,222 @@
+/* 共通ヘッダー */
+nav {
+    background-color: #2c3e50;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+nav form button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+nav form button:hover {
+    background-color: #c0392b;
+}
+
+/* バナー */
+.banner-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.banner-container img.banner-image {
+    width: 100%;
+    display: none; /* JSで最初のバナーを表示 */
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* お知らせ */
+.news {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.news h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.news ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.news li {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.news li a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.news li a:hover {
+    text-decoration: underline;
+}
+
+.news li span {
+    color: #999;
+    font-size: 0.9rem;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #83d8f5ff;
+    padding: 20px;
+}
+
+.header-left .nav-button,
+.header-right .logout-button {
+    margin-right: 10px;
+    padding: 8px 16px;
+    background-color: #424647ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.header-right .logout-button {
+    background-color: #83d8f5ff;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #83d8f5ff;
+    padding: 20px;
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-button, .logout-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.nav-button {
+    background-color: #424647ff;
+    color: #fff;
+}
+
+.nav-button:hover {
+    background-color: #333;
+}
+
+.logout-button {
+    background-color: #83d8f5ff;
+    color: #000;
+}
+
+.logout-button:hover {
+    background-color: #5bb8e6;
+}
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+.container h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.container p {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+video {
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.container form button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
+
+.container form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.container form button:hover:not(:disabled) {
+    background-color: #2980b9;
+}
+.container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.container ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.container ul li a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+}
+
+.container ul li a:hover {
+    text-decoration: underline;
+}
+.container img {
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
