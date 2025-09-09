@@ -39,10 +39,16 @@
 
         <form method="POST" action="{{ route('user.lesson.complete', $lesson->id) }}">
             @csrf
-            <button type="submit" @if($lesson->delivery_from > now() || $lesson->delivery_to < now()) disabled @endif>
-                受講しました
-            </button>
+            @if($lesson->status === 'completed')
+                <span class="text-green-600 font-bold">受講済み</span>
+            @else
+                <button type="submit" 
+                        @if($lesson->delivery_from > now() || $lesson->delivery_to < now()) disabled @endif>
+                    受講しました
+                </button>
+            @endif
         </form>
+
     @else
         <p>現在配信中の授業はありません</p>
     @endif
@@ -55,6 +61,11 @@
                 <a href="{{ route('user.delivery.show', $curriculum->id) }}">
                     {{ $curriculum->curriculum->title ?? '授業名' }}
                 </a>
+                
+                {{-- 受講済み判定 --}}
+                @if($curriculum->status === 'completed')
+                    <span class="text-green-600 font-bold ml-2">受講済み</span>
+                @endif
             </li>
         @endforeach
     </ul>

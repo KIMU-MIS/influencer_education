@@ -23,7 +23,6 @@ class TopController extends Controller
         // バナーを取得（最新1件）
         $banner = Banner::latest()->first();
 
-        dd($banner);
 
         return view('top', compact('articles', 'banner'));
     }

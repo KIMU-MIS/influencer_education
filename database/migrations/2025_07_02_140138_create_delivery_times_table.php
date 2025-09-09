@@ -13,12 +13,17 @@ return new class extends Migration
             $table->unsignedBigInteger('curriculums_id');
             $table->dateTime('delivery_from');
             $table->dateTime('delivery_to');
+            $table->string('status')->default('pending'); 
+            $table->boolean('always_open')->default(false);
             $table->timestamps();
 
-            // 外部キー
-            $table->foreign('curriculums_id')->references('id')->on('curriculums')->onDelete('cascade');
+        $table->foreign('curriculums_id')
+            ->references('id')
+            ->on('curriculums')
+            ->onDelete('cascade');
         });
     }
+
 
     public function down()
     {

@@ -14,20 +14,23 @@ class DeliveryController extends Controller
         $this->middleware('auth');
     }
 
-    // IDなしアクセス（最新配信中の授業を表示）
+    /**
+     * IDなしアクセス（最新配信中 or 常時公開の授業を表示）
+     */
     public function index()
     {
-        $lesson = DeliveryTime::where('delivery_from', '<=', now())
-            ->where('delivery_to', '>=', now())
-            ->with('curriculum')
-            ->first(); // 最初の配信中授業
+        // モデルのメソッドで最初の授業を取得
+        $lesson = DeliveryTime::getCurrentLesson();
 
-        $curriculums = DeliveryTime::with('curriculum')->get(); // 全授業一覧（サイドバー用）
+        // サイドバー用：全授業一覧
+        $curriculums = DeliveryTime::with('curriculum')->get();
 
         return view('user.delivery', compact('lesson', 'curriculums'));
     }
 
-    // ID付きアクセス（指定授業を表示）
+    /**
+     * ID付きアクセス（指定授業を表示）
+     */
     public function show($id)
     {
         $lesson = DeliveryTime::with('curriculum')->find($id);
@@ -41,7 +44,9 @@ class DeliveryController extends Controller
         return view('user.delivery', compact('lesson', 'curriculums'));
     }
 
-    // 受講完了
+    /**
+     * 受講完了
+     */
     public function complete($id)
     {
         $lesson = DeliveryTime::find($id);
@@ -50,7 +55,10 @@ class DeliveryController extends Controller
             return back()->with('error', '授業が存在しません');
         }
 
-        // ここで進捗更新などの処理を追加
+        $lesson->update([
+            'status' => 'completed',
+        ]);
+
         return back()->with('success', '受講しました');
     }
 }
