@@ -37,17 +37,19 @@
             <img src="{{ asset('images/coming_soon.png') }}" alt="配信期間外" style="width:100%;">
         @endif
 
-        <form method="POST" action="{{ route('user.lesson.complete', $lesson->id) }}">
-            @csrf
-            @if($lesson->status === 'completed')
-                <span class="text-green-600 font-bold">受講済み</span>
-            @else
-                <button type="submit" 
+        {{-- 受講完了フォーム --}}
+        @if($lesson->status === 'completed')
+            <p class="text-green-600 font-bold mt-2">この授業は受講済みです。</p>
+        @else
+            <form method="POST" action="{{ route('user.delivery.complete', $lesson->id) }}" class="mt-2">
+                @csrf
+                <button type="submit"
+                        class="btn btn-primary"
                         @if($lesson->delivery_from > now() || $lesson->delivery_to < now()) disabled @endif>
                     受講しました
                 </button>
-            @endif
-        </form>
+            </form>
+        @endif
 
     @else
         <p>現在配信中の授業はありません</p>
@@ -62,7 +64,7 @@
                     {{ $curriculum->curriculum->title ?? '授業名' }}
                 </a>
                 
-                {{-- 受講済み判定 --}}
+                {{-- 受講済み表示 --}}
                 @if($curriculum->status === 'completed')
                     <span class="text-green-600 font-bold ml-2">受講済み</span>
                 @endif

@@ -48,8 +48,8 @@ Route::middleware('auth')->group(function () {
     // 指定授業の詳細表示
     Route::get('/delivery/{id}', [DeliveryController::class, 'show'])->name('user.delivery.show');
 
-    // 受講完了ボタン
-    Route::post('/delivery/complete/{id}', [DeliveryController::class, 'complete'])->name('user.lesson.complete');
+    // 受講完了処理
+    Route::post('/delivery/{id}/complete', [DeliveryController::class, 'complete'])->name('user.delivery.complete');
 
     // 授業進捗ページ
     Route::get('/curriculum/progress', [CurriculumController::class, 'progress'])->name('curriculum.progress');

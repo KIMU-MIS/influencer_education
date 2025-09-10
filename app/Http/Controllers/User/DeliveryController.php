@@ -4,7 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\DeliveryTime;
+use App\Models\CurriculumProgress;
 
 class DeliveryController extends Controller
 {
@@ -47,7 +49,7 @@ class DeliveryController extends Controller
     /**
      * 受講完了
      */
-    public function complete($id)
+    public function complete(Request $request, $id)
     {
         $lesson = DeliveryTime::find($id);
 
@@ -55,10 +57,23 @@ class DeliveryController extends Controller
             return back()->with('error', '授業が存在しません');
         }
 
-        $lesson->update([
-            'status' => 'completed',
-        ]);
+        try {
+            DB::transaction(function () use ($lesson) {
+                // ① delivery_times.status を更新
+                $lesson->update([
+                    'status' => 'completed',
+                ]);
 
-        return back()->with('success', '受講しました');
+                // ② curriculum_progress.clear_flg を更新
+                CurriculumProgress::where('user_id', auth()->id())
+                    ->where('curriculums_id', $lesson->curriculums_id)
+                    ->update(['clear_flg' => 1]);
+            });
+
+            return back()->with('success', '受講が完了しました！');
+
+        } catch (\Exception $e) {
+            return back()->with('error', '受講処理に失敗しました。');
+        }
     }
 }
