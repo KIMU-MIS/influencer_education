@@ -7,7 +7,7 @@
 @endsection
 
 @section('header-right')
-    <!-- ログアウトボタンは新規登録画面では不要 -->
+    <!-- ログアウトボタンは不要 -->
 @endsection
 
 @section('content')
@@ -17,47 +17,51 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <div>
-            <label>ユーザーネーム</label>
-            <input type="text" name="name" value="{{ old('name') }}" required>
+        <!-- ユーザーネーム -->
+        <div class="form-group">
+            <label for="name">ユーザーネーム</label>
+            <input id="name" type="text" name="name" value="{{ old('name') }}" >
             @error('name')
-                <div style="color:red;">{{ $message }}</div>
+                <div style="color: red;">{{ $message }}</div>
             @enderror
         </div>
 
-        <div>
-            <label>カナ</label>
-            <input type="text" name="name_kana" value="{{ old('name_kana') }}" required>
+        <!-- カナ -->
+        <div class="form-group">
+            <label for="name_kana">カナ</label>
+            <input id="name_kana" type="text" name="name_kana" value="{{ old('name_kana') }}" >
             @error('name_kana')
-                <div style="color:red;">{{ $message }}</div>
+                <div style="color: red;">{{ $message }}</div>
             @enderror
         </div>
 
-        <div>
-        <label>メールアドレス</label>
-        <input type="email" name="email" value="{{ old('email') }}" required>
-        @error('email')
-            <div style="color:red;">{{ $message }}</div>
-        @enderror
+        <!-- メールアドレス -->
+        <div class="form-group">
+            <label for="email">メールアドレス</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" >
+            @error('email')
+                <div style="color: red;">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div>
-        <label>パスワード</label>
-        <input type="password" name="password" required>
-        @error('password')
-            <div style="color:red;">{{ $message }}</div>
-        @enderror
+        <!-- パスワード -->
+        <div class="form-group">
+            <label for="password">パスワード</label>
+            <input id="password" type="password" name="password" >
+            @error('password')
+                <div style="color: red;">{{ $message }}</div>
+            @enderror
         </div>
 
-        <div>
-        <label>パスワード確認</label>
-        <input type="password" name="password_confirmation" required>
+        <!-- パスワード確認 -->
+        <div class="form-group">
+            <label for="password_confirmation">パスワード確認</label>
+            <input id="password_confirmation" type="password" name="password_confirmation" >
         </div>
 
-
-        <button type="submit">登録</button>
+        <button type="submit" class="btn btn-primary mt-2">登録</button>
     </form>
 
-    <p> <a href="{{ route('login') }}">ログイン</a>はこちら</p>
+    <p class="mt-3"><a href="{{ route('login') }}">ログイン</a>はこちら</p>
 </div>
 @endsection

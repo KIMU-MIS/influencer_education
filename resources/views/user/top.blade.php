@@ -13,7 +13,7 @@
     <a href="{{ auth()->check() ? route('curriculum.progress') : route('login') }}">授業進捗</a>
 
     <!-- プロフィールボタン -->
-    <a href="{{ auth()->check() ? route('profile.edit') : route('login') }}">プロフィール</a>
+    <a href="{{ auth()->check() ? route('profile.edit') : route('login') }}">プロフィール設定</a>
 
     <!-- ログイン／ログアウト -->
     @if(auth()->check())

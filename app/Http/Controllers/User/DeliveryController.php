@@ -59,12 +59,7 @@ class DeliveryController extends Controller
 
         try {
             DB::transaction(function () use ($lesson) {
-                // ① delivery_times.status を更新
-                $lesson->update([
-                    'status' => 'completed',
-                ]);
 
-                // ② curriculum_progress.clear_flg を更新
                 CurriculumProgress::where('user_id', auth()->id())
                     ->where('curriculums_id', $lesson->curriculums_id)
                     ->update(['clear_flg' => 1]);
