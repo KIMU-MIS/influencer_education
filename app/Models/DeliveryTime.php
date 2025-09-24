@@ -16,6 +16,8 @@ class DeliveryTime extends Model
         'curriculums_id',
         'delivery_from',
         'delivery_to',
+        'status',
+        'always_open',
     ];
 
     protected $dates = [
@@ -49,4 +51,26 @@ class DeliveryTime extends Model
         ]);
       }
    }
+   /**
+     * 配信中または常時公開の授業を取得するスコープ
+     */
+    public function scopeAvailable($query)
+    {
+        return $query->where(function ($q) {
+            $q->where('delivery_from', '<=', now())
+              ->where('delivery_to', '>=', now());
+        })->orWhere('always_open', true);
+    }
+
+    /**
+     * 最初の配信中/常時公開授業を取得
+     */
+    public static function getCurrentLesson()
+    {
+        return self::available()
+            ->with('curriculum')
+            ->orderBy('delivery_from', 'asc')
+            ->first();
+    }
 }
+

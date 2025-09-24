@@ -3,62 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', 'タイトル')</title>
-    
+
+    <!-- 共通CSSはhead内に -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
     <!-- 共通ヘッダー -->
     <header class="header">
         <div class="header-left">
-            <button class="nav-button">授業管理</button>
-            <button class="nav-button">お知らせ管理</button>
-            <button class="nav-button">バナー管理</button>
+            @yield('header-left')
         </div>
         <div class="header-right">
-            <button class="logout-button">ログアウト</button>
+            @yield('header-right')
         </div>
     </header>
 
-    <!-- 各ページのコンテンツ -->
+    <!-- ページごとのコンテンツ -->
     <main>
         @yield('content')
     </main>
 
+    <!-- 共通JSはbodyの最後に -->
+    <script src="{{ asset('js/banner.js') }}" defer></script>
+    @stack('scripts')
+
 </body>
 </html>
-
-<style>
-    /* ヘッダー */
-.header {
-    position: relative; 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #83d8f5ff;
-    padding: 20px 20px;
-}
-
-.header-left .nav-button{
-    margin-right: 10px;
-    padding: 8px 16px;
-    background-color: #424647ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.header-right .logout-button {
-    margin-right: 10px;
-    padding: 8px 16px;
-    background-color: #83d8f5ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.header-right {
-    display: flex;
-    align-items: center;
-}
-</style>
